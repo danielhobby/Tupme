@@ -1,1 +1,4 @@
 Add a command to allow people to bypass the sacrificing.
+
+Allow players to sacrifice a few of the items for the craft.
+e.g 50/100
