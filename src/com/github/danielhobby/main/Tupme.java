@@ -20,6 +20,9 @@ public class Tupme extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new CraftEventListener(this), this);
 		reloadCustomConfig();
 		saveCustomConfig();
+		
+		Statics s = new Statics();
+		s.setUpStatics(this);
 	}
 	
 
