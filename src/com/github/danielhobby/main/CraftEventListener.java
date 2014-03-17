@@ -70,7 +70,7 @@ public class CraftEventListener implements Listener {
 	
 	private List<String> findAmounts(int id) 
 	{			
-		List<String> mats = Tupme.customConfig.getStringList(id + ".requiredItems");
+		List<String> mats = Tupme.recipesConfig.getStringList(id + ".requiredItems");
 		
 		return mats;
 	}

@@ -1,63 +1,82 @@
 package com.github.danielhobby.main;
 
+import org.bukkit.ChatColor;
+import org.bukkit.plugin.Plugin;
+
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Level;
+import java.io.OutputStream;
 
-import org.bukkit.ChatColor;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
 
 public class Statics {
 	public static String SERVER_NAME = "SERVERNAME";
 	public static String MESSAGE_HEADER = ChatColor.DARK_RED + "[" + SERVER_NAME + "] ";
 	
-	private FileConfiguration statics_ConfigurationFile = null;
-	private File statics_ConfigFile = null;
 	private Plugin local;
+	
+	File staticsFile = null;
+	FileConfiguration statics = null;
 	
 	public void setUpStatics(Plugin instance)
 	{
 		local = instance;
-		getServerName();
+		
+		staticsFile = new File(local.getDataFolder(), "statics.yml");
+		
+		try {
+	        setupFiles();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		
+		statics = new YamlConfiguration();
+		
+		try {
+			getServerName();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalidConfigurationException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public void getServerName()
-	{
-		SERVER_NAME = statics_ConfigurationFile.getString("servername");
-	}
-	
-	public void reloadCustomConfig() {
-	    if (statics_ConfigFile == null) {
-	    	statics_ConfigFile = new File(local.getDataFolder(), "customConfig.yml");
-	    }
-	    statics_ConfigurationFile = YamlConfiguration.loadConfiguration(statics_ConfigFile);
-	 
-	    // Look for defaults in the jar
-	    InputStream defConfigStream = local.getResource("customConfig.yml");
-	    if (defConfigStream != null) {
-	        YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
-	        statics_ConfigurationFile.setDefaults(defConfig);
+	private void setupFiles() throws Exception {
+	    if(!staticsFile.exists()){
+	    	staticsFile.getParentFile().mkdirs();
+	        copy(local.getResource("statics.yml"), staticsFile);
 	    }
 	}
 	
-	public void saveCustomConfig() {
-	    if (statics_ConfigurationFile == null || statics_ConfigFile == null) {
-	        return;
-	    }
+	
+	private void copy(InputStream in, File file) {
 	    try {
-	        getCustomConfig().save(statics_ConfigFile);
-	    } catch (IOException ex) {
-	    	local.getLogger().log(Level.SEVERE, "Could not save config to " + statics_ConfigFile, ex);
+	        OutputStream out = new FileOutputStream(file);
+	        byte[] buf = new byte[1024];
+	        int len;
+	        while((len=in.read(buf))>0){
+	            out.write(buf,0,len);
+	        }
+	        out.close();
+	        in.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
 	    }
 	}
-	
-	public FileConfiguration getCustomConfig() {
-	    if (statics_ConfigurationFile == null) {
-	        reloadCustomConfig();
-	    }
-	    return statics_ConfigurationFile;
+
+	public void getServerName() throws FileNotFoundException, IOException, InvalidConfigurationException
+	{
+		statics.load(staticsFile);
+		
+		SERVER_NAME = statics.getString("servername");
+		
+		statics.save(staticsFile);
 	}
 }
