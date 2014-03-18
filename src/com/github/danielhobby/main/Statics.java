@@ -39,12 +39,7 @@ public class Statics {
 		
 		try {
 			getServerName();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InvalidConfigurationException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 		}
 	}
 	
