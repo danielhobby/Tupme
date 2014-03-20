@@ -4,9 +4,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Tupme extends JavaPlugin{
@@ -27,8 +33,34 @@ public class Tupme extends JavaPlugin{
 	    }
 		recipesConfig = new YamlConfiguration();
 		
-		Statics s = new Statics();
-		s.setUpStatics(this);
+		try {
+			recipesConfig.load(recipesConfigFile);
+			getConfig().load("config.yml");
+		} catch (Exception e) {
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
+	{
+		Player p = (Player)sender;
+		
+		if (label.equalsIgnoreCase("tup"))
+		{
+			if(args[0] == "listrecipes")
+			{
+				p.sendMessage(Statics.MESSAGE_HEADER + ChatColor.YELLOW + " Learned recipes:");
+				List<String> learnedrecipes = getConfig().getStringList("players." + p.getName() + "items");
+				for (int i = 0; i < learnedrecipes.size(); i++)
+				{
+					p.sendMessage("" + Material.getMaterial(Integer.parseInt(learnedrecipes.get(i))));
+				}
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	

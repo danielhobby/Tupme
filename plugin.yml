@@ -1,3 +1,7 @@
 name: Tupme
 main: com.github.danielhobby.main.Tupme
 version: 1.0.0
+
+commands:
+  tup:
+    description: Turn on or off hatching.

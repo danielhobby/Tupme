@@ -54,6 +54,8 @@ public class CraftEventListener implements Listener {
 		{
 			List<String> amounts = findAmounts(event.getCurrentItem().getType().getId());
 			
+			p.sendMessage("amount 1" + amounts.get(0));
+			
 			if (tryRemoveFromInvent(p, amounts))
 			{
 				canCraft.add(event.getCurrentItem().getType().getId() + "");
