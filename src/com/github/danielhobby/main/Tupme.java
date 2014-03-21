@@ -40,7 +40,6 @@ public class Tupme extends JavaPlugin{
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
@@ -48,13 +47,14 @@ public class Tupme extends JavaPlugin{
 		
 		if (label.equalsIgnoreCase("tup"))
 		{
-			if(args[0] == "listrecipes")
+			if(args[0].equalsIgnoreCase("listrecipes"))
 			{
 				p.sendMessage(Statics.MESSAGE_HEADER + ChatColor.YELLOW + " Learned recipes:");
-				List<String> learnedrecipes = getConfig().getStringList("players." + p.getName() + "items");
+				List<String> learnedrecipes = getConfig().getStringList("players." + p.getName() + ".items");
+				
 				for (int i = 0; i < learnedrecipes.size(); i++)
 				{
-					p.sendMessage("" + Material.getMaterial(Integer.parseInt(learnedrecipes.get(i))));
+					p.sendMessage("" + Material.getMaterial(learnedrecipes.get(i)));
 				}
 				return true;
 			}
