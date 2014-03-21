@@ -58,6 +58,40 @@ public class Tupme extends JavaPlugin{
 				}
 				return true;
 			}
+			else if (args[0].equalsIgnoreCase("bypass"))
+			{
+				if (p.isOp())
+				{
+					if (args[1] != null)
+					{
+						String currentState = getConfig().getString("players." + args[1] + ".bypass");
+						if (currentState == "TRUE")
+						{
+							getConfig().set("players." + args[1] + ".bypass", "FALSE");
+						}
+						else
+						{
+							getConfig().set("players." + args[1] + ".bypass", "TRUE");
+						}
+					}
+					else
+					{
+						String currentState = getConfig().getString("players." + p.getName() + ".bypass");
+						if (currentState == "TRUE")
+						{
+							getConfig().set("players." + p.getName() + ".bypass", "FALSE");
+						}
+						else
+						{
+							getConfig().set("players." + p.getName() + ".bypass", "TRUE");
+						}
+					}
+				}
+				else
+				{
+					p.sendMessage(Statics.MESSAGE_HEADER + ChatColor.AQUA + "You must be an Operator to use this command.");
+				}
+			}
 		}
 		
 		return false;
