@@ -91,8 +91,6 @@ public class CraftEventListener implements Listener {
 				String[] items = amounts.get(i).split(",");
 				ItemStack test = new ItemStack(Material.getMaterial(items[0].trim()), Integer.parseInt(items[1].trim()), (short) j);
 				
-				//p.sendMessage(j + " " + test.getType().name() + " " + test.getDurability());
-				
 				boolean testCondition = p.getInventory().containsAtLeast(test, Integer.parseInt(items[1].trim()));
 				
 				if (!testCondition)
@@ -105,8 +103,6 @@ public class CraftEventListener implements Listener {
 					itemMetaData = (short)j;
 					break;
 				}
-				
-				//p.sendMessage(test.getType().name() + testCondition);
 			}
 		}
 		
@@ -141,6 +137,7 @@ public class CraftEventListener implements Listener {
 			done = true;
 		}
 		
+		//Update the players inventory to remove the items that were "removed".
 		p.updateInventory();
 		
 		
