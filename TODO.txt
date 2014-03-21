@@ -1,4 +1,10 @@
-Add a command to allow people to bypass the sacrificing.
+TODO:
+- Allow players to sacrifice a few of the items for the craft.
+  e.g 50/100
+- Random chance to remove a recipe when a player dies.
+- 
 
-Allow players to sacrifice a few of the items for the craft.
-e.g 50/100
+
+DONE:
+- Add a command to allow people to bypass the sacrificing.
+

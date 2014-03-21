@@ -47,6 +47,13 @@ public class CraftEventListener implements Listener {
 			}
 		}
 		
+		String bypass = local.getConfig().getString("players." + p.getName() + ".bypass");
+		
+		if (bypass == "TRUE")
+		{
+			allowed = true;
+		}
+		
 		if (!allowed)
 		{
 			List<String> amounts = findAmounts(event.getCurrentItem().getType().name());
