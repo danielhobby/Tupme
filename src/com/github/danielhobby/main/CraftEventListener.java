@@ -65,6 +65,10 @@ public class CraftEventListener implements Listener {
 				local.saveConfig();
 				p.sendMessage(Statics.MESSAGE_HEADER + ChatColor.GOLD + "You can now make " + event.getCurrentItem().getType() + "!");
 			}
+			else if(tryRemoveSomeFromInvent(p, amounts))
+			{
+				
+			}
 			else
 			{
 				event.setCancelled(true);
@@ -72,6 +76,32 @@ public class CraftEventListener implements Listener {
 		}
 	}	
 	
+	private boolean tryRemoveSomeFromInvent(Player p, List<String> amounts) {
+		
+		//psuedo code
+		// For the first item
+		// Count the players invent to see if they have any of the first item.
+		// Remove the amount that we counted from the players invent.
+		
+		
+		
+		ItemStack[] p_Invent = p.getInventory().getContents();
+		
+		for (int i = 0; i < amounts.size(); i++)
+		{
+			String[] items = amounts.get(i).split(",");
+			ItemStack currentSearchItem = new ItemStack(Material.getMaterial(items[0]), 1);
+			
+			int amountOfCurrentItem = 0;
+			
+			//for (int j = 0; j < p_Invent.)
+			
+		}
+		
+		
+		return false;
+	}
+
 	private List<String> findAmounts(String id) 
 	{			
 		List<String> mats = Tupme.recipesConfig.getStringList(id + ".requiredItems");
