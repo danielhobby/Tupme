@@ -22,7 +22,7 @@ public class CraftEventListener implements Listener {
 	}
 	
 	@EventHandler
-	public void CraftItemEventsss(CraftItemEvent event)
+	public void CraftItemEvents(CraftItemEvent event)
 	{
 		Player p = (Player) event.getWhoClicked();
 		//p.sendMessage(Statics.MESSAGE_HEADER + ChatColor.RED + "You tried to craft: " + event.getCurrentItem().getType().name()+ " : " + event.getCurrentItem().getType().getId());
