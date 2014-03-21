@@ -36,8 +36,7 @@ public class CraftEventListener implements Listener {
 			if (event.getCurrentItem().getType() == Material.getMaterial(canCraft.get(i).trim()))
 			{
 				allowed = true;
-			}
-			
+			}			
 		}
 		
 		for (int i = 0; i < starterItems.length; i++)
@@ -46,7 +45,6 @@ public class CraftEventListener implements Listener {
 			{
 				allowed = true;
 			}
-			
 		}
 		
 		if (!allowed)
@@ -93,7 +91,7 @@ public class CraftEventListener implements Listener {
 				String[] items = amounts.get(i).split(",");
 				ItemStack test = new ItemStack(Material.getMaterial(items[0].trim()), Integer.parseInt(items[1].trim()), (short) j);
 				
-				p.sendMessage(j + " " + test.getType().name() + " " + test.getDurability());
+				//p.sendMessage(j + " " + test.getType().name() + " " + test.getDurability());
 				
 				boolean testCondition = p.getInventory().containsAtLeast(test, Integer.parseInt(items[1].trim()));
 				
@@ -108,7 +106,7 @@ public class CraftEventListener implements Listener {
 					break;
 				}
 				
-				p.sendMessage(test.getType().name() + testCondition);
+				//p.sendMessage(test.getType().name() + testCondition);
 			}
 		}
 		
@@ -124,7 +122,7 @@ public class CraftEventListener implements Listener {
 			for (int i = 0; i < amounts.size(); i++)
 			{
 				String[] items = amounts.get(i).split(",");
-				p.sendMessage(Statics.MESSAGE_HEADER + ChatColor.YELLOW + "  - " + items[1] + " " + Material.getMaterial(items[0]));
+				p.sendMessage(Statics.MESSAGE_HEADER + ChatColor.YELLOW + "  - " + items[1] + " (" + (Double.parseDouble(items[1]) / 64) + ") " + Material.getMaterial(items[0]));
 			}
 			
 			return false;
