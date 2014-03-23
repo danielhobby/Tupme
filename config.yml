@@ -1,6 +1,9 @@
 players:
   dannyhobby:
     bypass: 'FALSE'
+    partialcrafts:
+      STICK:
+      - WOOD, 10
     items:
     
     

@@ -14,7 +14,7 @@ import org.bukkit.plugin.Plugin;
 public class CraftEventListener implements Listener {
 	Plugin local;
 	
-	Material[] starterItems = { Material.WOOD };
+	Material[] starterItems = { Material.WOOD, Material.STORAGE_MINECART, Material.POWERED_MINECART, Material.HOPPER_MINECART, Material.EXPLOSIVE_MINECART };
 	
 	public CraftEventListener(Plugin instance)
 	{
@@ -65,7 +65,7 @@ public class CraftEventListener implements Listener {
 				local.saveConfig();
 				p.sendMessage(Statics.MESSAGE_HEADER + ChatColor.GOLD + "You can now make " + event.getCurrentItem().getType() + "!");
 			}
-			else if(tryRemoveSomeFromInvent(p, amounts))
+			else if(tryRemoveSomeFromInvent(p, amounts, event.getCurrentItem().getType()))
 			{
 				
 			}
@@ -76,7 +76,7 @@ public class CraftEventListener implements Listener {
 		}
 	}	
 	
-	private boolean tryRemoveSomeFromInvent(Player p, List<String> amounts) {
+	private boolean tryRemoveSomeFromInvent(Player p, List<String> amounts, Material tryingToCraft) {
 		
 		//psuedo code
 		// For the first item
@@ -85,18 +85,36 @@ public class CraftEventListener implements Listener {
 		
 		
 		
-		ItemStack[] p_Invent = p.getInventory().getContents();
+		int[] amountOfCurrentItem = new int[amounts.size() + 1];
+		
+		List<String> sacrificed = Tupme.recipesConfig.getStringList("players." + p.getName() + ".partialcrafts");
+		
+		
 		
 		for (int i = 0; i < amounts.size(); i++)
 		{
 			String[] items = amounts.get(i).split(",");
 			ItemStack currentSearchItem = new ItemStack(Material.getMaterial(items[0]), 1);
 			
-			int amountOfCurrentItem = 0;
+			p.sendMessage("Current Search Item: " + currentSearchItem.getType().name());
 			
-			//for (int j = 0; j < p_Invent.)
-			
+			for (int j = 0; j < p.getInventory().getContents().length; j++)
+			{
+				if (p.getInventory().getItem(j) != null)
+				{
+					p.sendMessage(p.getInventory().getItem(j).getType().name());
+					if (p.getInventory().getItem(j).getType().equals(currentSearchItem.getType()))
+					{
+						int amount = amountOfCurrentItem[i] + p.getInventory().getItem(j).getAmount();
+						amountOfCurrentItem[i] = amount;
+						p.sendMessage("Removed: " + p.getInventory().getItem(j).getType() + " : " + amountOfCurrentItem[i]);
+						p.getInventory().setItem(j, new ItemStack(Material.AIR));
+					}
+				}
+			}			
 		}
+		
+		
 		
 		
 		return false;
